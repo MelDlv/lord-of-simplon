@@ -1,92 +1,61 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Lord of Simplon</title>
-    <link rel="stylesheet" href="styles.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="witdh=device-width, initial-scale=1.0" />
+    <title>Lord of simplon</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Irish+Grover">
 </head>
-<body class="index">
-<H1>Lord of Simplon</H1>
 
-<!-- Ligne d'entête -->
-<div class="heroe-header-line">
-    <div class="player-header">Joueur 1</div>
-    <div class="player-header">
-        <button id="demarrer" class="button" type="button" onclick="location.href='fight.html'">Démarrer</button>
-    </div>
-    <div class="player-header">Joueur 2</div>
-</div>
-
-<!-- Ligne de sélection d'un héros : de part et d'autre de la card du héros on doit mettre des cases à cocher -->
-<div class="heroe-selection-line">
-
-    <div class="radio-player">
-        <input type="radio" name="player1" checked>
+<body>
+<main>
+    <h1 class="titre">Lord of simplon</h1>
+    <div class="heroe-header-line">
+        <h2>Joueur 1</h2>
+        <button class="button" type="button" onclick="">Démarrer</button>
+        <h2>Joueur 2</h2>
     </div>
 
-    <div class="heroe-card">
-        <div class="heroe-card-img">
-            <img src="img/Paladin.png" alt="Log du paladin">
+    <div class="heroe-selection-line">
+
+        <div class="joueurchoisi">
+            <input class = "radio-player" type="radio" name= "Joueur1" value="Paladin" checked>
+            <input class = "radio-player" type="radio" name= "Joueur1" value="Shifumy" checked>
+            <input class = "radio-player" type="radio" name= "Joueur1" value="Rashuk" checked>
         </div>
-        <div class="heroe-card-text">
-            <h1>Paladin</h1>
-            <p class="heroe-description">Gare à celui qui se trouvera sur le chemin de son épée prodigieuse, le
-                Paladin est un héros qui livre des combats sans merci !
-            </p>
+
+        <div class="ChoixHero">
+
+            <div class="heroe-card">
+                <img src="img/Paladin.png" alt="Log du paladin">
+                <div class="heroe-card-text">
+                    <h1>Paladin</h1>
+                    <p>Gare à celui qui se trouvera sur le chemin de son épée prodigieuse, le Paladin est un héros qui livre des combats sans merci !</p>
+                </div>
+            </div>
+
+            <div class="heroe-card">
+                <img src="img/Shifumy.png" alt="Log du shifumy">
+                <div class="heroe-card-text">
+                    <h1>Shifumy</h1>
+                    <p>Son pouvoir régénérant en a usé plus d'un !</p>
+                </div>
+            </div>
+
+            <div class="heroe-card">
+                <img  src="img/Rashuk.png" alt="Log du Rashuk">
+                <div class="heroe-card-text">
+                    <h1>Rashuk</h1>
+                    <p>C’est un personnage dessiné sur un coin de table et c’est de là que lui vient le nom de sa meilleure attaque !</p>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <div class="radio-player">
-        <input type="radio" name="player2">
-    </div>
-
-</div>
-
-<!-- Ligne de sélection du héros n°2 -->
-<div class="heroe-selection-line">
-    <div class="radio-player">
-        <input type="radio" name="player1">
-    </div>
-
-    <div class="heroe-card">
-        <div class="heroe-card-img">
-            <img src="img/Shifumy.png" alt="Log du paladin">
-        </div>
-        <div class="heroe-card-text">
-            <h1>Shifumy</h1>
-            <p class="heroe-description">Le Shifumy est imbattable mais shhhh ! c'est un secret :)
-            </p>
+        <div class="joueurchoisi">
+            <input class = "radio-player" type="radio" name= "Joueur2" value="Paladin" checked>
+            <input class = "radio-player" type="radio" name= "Joueur2" value="Shifumy" checked>
+            <input class = "radio-player" type="radio" name= "Joueur2" value="Rashuk" checked>
         </div>
     </div>
-
-    <div class="radio-player">
-        <input type="radio" name="player2" checked>
-    </div>
-</div>
-
-<!-- Ligne de sélection du héros n°3 -->
-<div class="heroe-selection-line">
-    <div class="radio-player">
-        <input type="radio" name="player1">
-    </div>
-
-    <div class="heroe-card">
-        <div class="heroe-card-img">
-            <img src="img/Rashuk.png" alt="Log du paladin">
-        </div>
-        <div class="heroe-card-text">
-            <h1>Rashuk</h1>
-            <p class="heroe-description">C’est un personnage dessiné sur un coin de table et c’est de là que lui vient
-                le nom de sa meilleure attaque !
-            </p>
-        </div>
-    </div>
-
-    <div class="radio-player">
-        <input type="radio" name="player2">
-    </div>
-</div>
-
+</main>
 </body>
-</html>
