@@ -3,121 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Lord of Simplon</title>
-    <link rel="stylesheet" href="styles.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <script rel="script">
-
-    /**
-     * Fonction qui lance une magie de régénération : augmentation du score du joueur
-     * et ajout d'un nouveau coup reçu dans la liste des coups du joueur.
-     *
-     * @param numPlayer Numéro du joueur attaqué.
-     * @param nameRegen Nom de l'attaque.
-     * @param nbPoints Nombre de point en moins.
-     */
-    function regeneratePlayer(numPlayer, nameRegen, nbPoints){
-
-        // On récupère les éléments du DOM avec lesquels on va travailler
-        let divScorePlayer = document.getElementById('score-player' + numPlayer);
-        let divCoupsRecus = document.getElementById('liste-coups-recus-player' + numPlayer);
-
-        // On récupère le score actuel sous forme d'une string :
-        let txtScore = divScorePlayer.innerText;
-
-        // Conversion en integer :
-        // https://www.tutorialspoint.com/how-to-convert-a-string-into-integer-in-javascript
-        let newScore = parseInt(txtScore) + nbPoints;
-
-        // On ne doit pas pouvoir régénérer au-delà de 100 pts
-        let depassement = newScore > 100;
-        if ( depassement ) {
-            newScore = 100;
-        }
-
-        // Modification du score : on change la propriété 'innerHTML' de l'élément DOM
-        divScorePlayer.innerText = newScore;
-
-        if (!depassement) {
-            // Ajout d'un nouveau coup reçu (ATTENTION à bien utiliser le caractère back-quote ` (touches ALTGR+7 puis ESPACE) et non pas ' (touche 4)
-            divCoupsRecus.innerHTML += `<div class="coup"><div><p>Régénération</p><h1>${nameRegen}</h1></div><span class="hit-regen">+${nbPoints} pts</span></div>`;
-
-            // Après avoir ajouté un coup, on scroll automatiquement pour l'afficher
-            // Attention la fonction "Element.scroll()" prend en paramètre un dictionnaire au format "{clé1: valeur1, clé2: valeur2 ...}"
-            divCoupsRecus.scroll({top: 1000, behavior: "smooth"});
-        }
-
-        tourSuivant(numPlayer);
-    }
-
-    /**
-     * Ajoute une nouvelle attaque dans la liste des coups reçus par le joueur.
-     *
-     * @param numPlayerAttaquant Numéro du joueur attaquant.
-     * @param nameAttack Nom de l'attaque.
-     * @param nbPoints Nombre de point en moins.
-     */
-    function attaquePlayer(numPlayerAttaquant, nameAttack, nbPoints) {
-
-        let numPlayer = 1+(numPlayerAttaquant%2);
-
-        // On récupère les éléments du DOM avec lesquels on va travailler
-        let divScorePlayer = document.getElementById('score-player' + numPlayer);
-        let divCoupsRecus = document.getElementById('liste-coups-recus-player' + numPlayer);
-
-        // On récupère le score actuel sous forme d'une string :
-        let txtScore = divScorePlayer.innerText;
-
-        // Conversion en integer :
-        // https://www.tutorialspoint.com/how-to-convert-a-string-into-integer-in-javascript
-        let newScore = parseInt(txtScore) - nbPoints;
-
-        // Attention pas de scores négatifs
-        if ( newScore < 0) {
-            newScore = 0;
-        }
-
-        // Modification du score : on change la propriété 'innerHTML' de l'élément DOM
-        divScorePlayer.innerText = newScore;
-
-        // Ajout d'un nouveau coup reçu : modif du innerHTML
-        divCoupsRecus.innerHTML += `<div class="coup"><div><p>Attaque</p><h1>${nameAttack}</h1></div><span class="hit-damages">-${nbPoints} pts</span></div>`;
-
-        // Après avoir ajouté un coup, on scroll automatiquement pour l'afficher
-        // Attention la fonction "Element.scroll()" prend en paramètre un dictionnaire au format "{clé1: valeur1, clé2: valeur2 ...}"
-        divCoupsRecus.scroll({top: 1000, behavior: "smooth"});
-
-        if ( newScore == 0) {
-            finDuCombat();
-        } else {
-            tourSuivant(numPlayerAttaquant);
-        }
-    }
-
-    function tourSuivant(numPlayer){
-
-        let numPlayerCourant = numPlayer;
-        let numPlayerSuivant = 1+(numPlayer%2);
-
-        console.info('Joueur courant = '+numPlayerCourant);
-        console.info('Joueur suivant = '+numPlayerSuivant);
-
-        let divToHide = document.getElementById('attaques-player' + numPlayerCourant);
-        let divToShow = document.getElementById('attaques-player' + numPlayerSuivant);
-
-        divToHide.classList.remove('attaquant');
-        divToHide.classList.add('non-attaquant');
-
-        divToShow.classList.remove('non-attaquant');
-        divToShow.classList.add('attaquant');
-    }
-
-    function finDuCombat(){
-        document.getElementById('winner').className = 'winner';
-        document.getElementById('attaques').style.display = 'none';
-        document.getElementById('score-player2').innerText = '0';
-    }
-    </script>
+    <link rel="stylesheet" href="styles.css">
+    <script rel="script" src="fight.js"></script>
 </head>
 <body>
 <H1>Lord of Simplon</H1>
@@ -145,23 +33,16 @@
 </div>
 
 <div id="sortilege-en-cours" class="three-columns-container">
-    <div class="column sortilege-player">
-        <span class="sortilege-actif">Sortilège en cours : mal de mer (<span id="sortilege-damages">-5</span>)</span>
-        <br>
-        <span class="sortilege-actif-nbtours">Actif pendant encore <span id="nb-tours-sortilege-actif">1</span> tour(s)</span>
-    </div>
-    <div class="center-column">
-    </div>
-    <div class="column sortilege-player">
-        <span class="sortilege-inactif">Aucun sortilège en cours</span>
-    </div>
+    <div id="sortilege-player1" class="column sortilege-player">Aucun sortilège en cours</div>
+    <div class="center-column"></div>
+    <div id="sortilege-player2" class="column sortilege-player">Aucun sortilège en cours</div>
 </div>
 
 <!-- ***************************************************************************************-->
 <!--                                        GAGNANT                                         -->
 <!-- ***************************************************************************************-->
 <div id="winner" class="winner-area">
-    <h1>Joueur 1 a gagné !</h1>
+    <h1 id="winner-name">Joueur 1</h1>
     <button class="button" onclick="window.location.href='index.html'">Nouveau combat</button>
 </div>
 <!-- ***************************************************************************************-->
@@ -178,26 +59,11 @@
 -->
 <div id="liste-coups-recus" class="three-columns-container">
     <!-- Coups reçus par le joueur 1 -->
-    <div id="liste-coups-recus-player1" class="column card">
-        <!--
-        <div class="coup"><div><p>Attaque</p><h1>Coin de table</h1></div><span class="hit-damages">-8 pts</span></div>
-        <div class="coup"><div><p>Attaque</p><h1>Clous rouillés</h1></div><span class="hit-damages">-6 pts</span></div>
-        <div class="coup"><div><p>Attaque</p><h1>Eau bouillante</h1></div><span class="hit-damages">-7 pts</span></div>
-        <div class="coup"><div><p>Attaque</p><h1>Coin de table</h1></div><span class="hit-damages">-8 pts</span></div>
-        -->
-    </div>
-
+    <div id="liste-coups-recus-player1" class="column card"></div>
+    <!-- Colonne centrale -->
     <div class="center-column"></div>
-
     <!-- Coups reçus par le joueur 2 -->
-    <div id="liste-coups-recus-player2" class="column card">
-        <!--
-        <div class="coup"><div><p>Attaque</p><h1>Epée capricieuse</h1></div><span class="hit-damages">-12 pts</span></div>
-        <div class="coup"><div><p>Attaque</p><h1>Fontaine de jouvence</h1></div><span class="hit-regen">+15 pts</span></div>
-        <div class="coup"><div><p>Attaque</p><h1>Croche-pied</h1></div><span class="hit-damages">-10 pts</span></div>
-        <div class="coup"><div><p>Attaque</p><h1>Epée capricieuse</h1></div><span class="hit-damages">-12 pts</span></div>
-        -->
-    </div>
+    <div id="liste-coups-recus-player2" class="column card"></div>
 </div>
 
 <!-- ******************************************************************************
@@ -229,7 +95,7 @@
             <h3>Picon-bière</h3>
             <p>+5 pts</p>
         </div>
-        <div class="button-sortilege">
+        <div class="button-sortilege" onclick="sortilege(1, 'Déshydratation', 3)">
             <h3>Déshydratation</h3>
             <p>-3 pts</p>
         </div>
@@ -260,7 +126,7 @@
             <h3>Fontaine de jouvence</h3>
             <p>+15 pts</p>
         </div>
-        <div class="button-sortilege">
+        <div class="button-sortilege" onclick="sortilege(2, 'Mal de mer', 5)">
             <h3>Mal de mer</h3>
             <p>-5 pts</p>
         </div>
